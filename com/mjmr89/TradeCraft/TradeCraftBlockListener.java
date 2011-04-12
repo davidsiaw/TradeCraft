@@ -108,22 +108,20 @@ public class TradeCraftBlockListener extends BlockListener{
         }
 
         if ( plugin.permissions.canMakePlayerShops(player)){
-            return;
+            if ( this.plugin.properties.getStrictPlayerShopOwnerNameRequired() ) {
+	        	if (player.getName().equalsIgnoreCase(ownerName)) {
+	        		plugin.data.setOwnerOfSign(player.getName(), sign);
+	        		return;
+	        	}
+	        } else {
+	        	if (player.getName().startsWith(ownerName)) {
+	        		plugin.data.setOwnerOfSign(player.getName(), sign);
+	        		return;
+	        	}
+	        }
         }
 
-        if ( this.plugin.properties.getStrictPlayerShopOwnerNameRequired() ) {
-        	if (player.getName().equalsIgnoreCase(ownerName)) {
-        		plugin.data.setOwnerOfSign(player.getName(), sign);
-        		return;
-        	}
-        } else {
-        	if (player.getName().startsWith(ownerName)) {
-        		plugin.data.setOwnerOfSign(player.getName(), sign);
-        		return;
-        	}
-        }
-
-        plugin.sendMessage(player, "You can't create signs with other players names on them!");
+        plugin.sendMessage(player, "You can't create signs with other player's names on them!");
         e.setCancelled(true);
         
         return;
