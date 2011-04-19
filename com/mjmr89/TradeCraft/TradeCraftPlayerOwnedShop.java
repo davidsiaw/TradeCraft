@@ -34,18 +34,7 @@ public class TradeCraftPlayerOwnedShop extends TradeCraftItemShop {
     }
 
     public boolean isOwnedByPlayer(Player player) {
-    	if ( ownerName == null ) {
-    		return false;
-    	} else {
-    		// option for less strict player name matching.
-	    	if ( this.plugin.properties.getStrictPlayerShopOwnerNameRequired() ) {
-	    		// strict is enforced, so use a perfect name match 
-	    		return player.getName().equals(ownerName);
-	    	} else {
-	    		// strict is not enforced, so allow the playername to start with the set owner name
-	    		return player.getName().indexOf(ownerName) == 0;
-	    	}
-    	}
+    	return ownerName != null && player.getName().equals(ownerName);
     }
 
     public int getItemType() {

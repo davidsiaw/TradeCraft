@@ -291,7 +291,7 @@ public class TradeCraft extends JavaPlugin {
 	}
 
 	String getItemName(String[] signLines) {
-		return getSpecialText(signLines, "[", "]");
+		return getSpecialTextOnLine(signLines[0], "[", "]");
 	}
 
 	String getOwnerName(String signLine) {
