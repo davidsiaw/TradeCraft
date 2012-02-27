@@ -27,7 +27,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -545,13 +544,7 @@ public class TradeCraft extends JavaPlugin {
 		} else {
 			
 			ItemStack currencyStack = new ItemStack(TradeCraft.currency.id, 1, TradeCraft.currency.data); // weird that there's no Material.getMaterial(id, short/byte)
-			MaterialData currencyData = currencyStack.getType().getNewData((byte)TradeCraft.currency.data);
-			String currencyString; 
-			if ( currencyData == null ) {
-				currencyString = currencyStack.getType().name();
-			} else {
-				currencyString = currencyData.toString();
-			}
+			String currencyString = currencyStack.getType().name();
 			
 			//String baseName = stack.getType().name();
 	    	String[] words = currencyString.replace("null ", "").split("\\(")[0].split("[ _]{1}");
