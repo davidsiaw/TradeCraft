@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.MemorySection;
 
 import nl.armeagle.Configuration.StatefulYamlConfiguration;
@@ -167,11 +168,19 @@ class TradeCraftConfigurationFile {
     	return this.mapItemNames.containsKey(name.toLowerCase());
     }
 
+    public Material getMat(String name) {
+    	try {
+    		return Material.valueOf(name.toUpperCase());
+    	} catch(IllegalArgumentException ex) {
+    		return null;
+    	}
+    }
+    
     public TradeCraftConfigurationInfo get(String name) {
 
-    	// @todo, config code doesn't seem to like serialized objects, cannot seem to find the TradeCraftConfigurationInfo class
+    	// TODO config code doesn't seem to like serialized objects, cannot seem to find the TradeCraftConfigurationInfo class
     	// though, the otherwise resulting ==: classpath lines aren't very user friendly anyway.
-//    	return (TradeCraftConfigurationInfo) plugin.getConfig().get(name.toUpperCase());
+    	
     	String itemName = this.mapItemNames.get(name.toLowerCase());
     	if (null != itemName) {
     		MemorySection item = ((MemorySection)this.getConfig().get(itemName));
@@ -182,6 +191,22 @@ class TradeCraftConfigurationFile {
     			}
     		}
     	}
+
+    	// can't find in config. Then we shall try and infer the ID
+    	// we permit 2 permutations of the name: GOLD_INGOT and GOLD INGOT 
+    	Material mat = getMat(name);
+    	if (mat != null) {
+    		int id = mat.getId();
+    		return new TradeCraftConfigurationInfo(name, id, 0);
+    	}
+    	
+    	mat = getMat(name.replace(" ", "_"));
+    	if (mat != null) {
+    		int id = mat.getId();
+    		return new TradeCraftConfigurationInfo(name, id, 0);
+    	}
+    	
+    	
     	return null;
     }
     public TradeCraftConfigurationInfo get(int id) {

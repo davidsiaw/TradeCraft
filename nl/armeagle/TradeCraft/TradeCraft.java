@@ -26,7 +26,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -294,8 +293,8 @@ public class TradeCraft extends JavaPlugin {
 				String location = entry.getKey().replaceFirst(",", "(") +")";
 				message += ChatColor.GRAY + location +" "+ ChatColor.WHITE;
 			}
-			message += TradeCraftLocalization.get("ITEM") +": "+ this.configuration.get(info.itemType).name +"("+ info.itemType.toShortString() +")"
-				+" "+ TradeCraftLocalization.get("AMOUNT") +": "+ info.itemAmount +" "
+			message += TradeCraftLocalization.get("ITEM") +": "+ info.itemType.toPrettyString()
+				+ " "+ TradeCraftLocalization.get("AMOUNT") +": "+ info.itemAmount +" "
 				+ this.getCurrencyName() +": "+ info.currencyAmount;
 			
 			displayTo.sendMessage(message);
@@ -532,32 +531,12 @@ public class TradeCraft extends JavaPlugin {
 	}
 	
 	/**
-	 * Get a CamelCased string based on the current currency.
-	 * 
 	 * @return a string representing the currency.
 	 */
 	public String getCurrencyName() {
-		// Try to get the name from the configuration file first
-		TradeCraftConfigurationInfo configInfo = this.configuration.get(TradeCraft.currency);
-		if ( configInfo != null ) {
-			return configInfo.name;
-		} else {
-			
-			ItemStack currencyStack = new ItemStack(TradeCraft.currency.id, 1, TradeCraft.currency.data); // weird that there's no Material.getMaterial(id, short/byte)
-			String currencyString = currencyStack.getType().name();
-			
-			//String baseName = stack.getType().name();
-	    	String[] words = currencyString.replace("null ", "").split("\\(")[0].split("[ _]{1}");
-	    	String name = "";
-	    	for ( int word_ind = 0; word_ind < words.length; word_ind++ ) {
-	    		String word = words[word_ind];
-	    		if ( word_ind > 0 ) {
-	    			name = name.concat(" ");
-	    		}
-	    		name = name.concat(word.substring(0, 1).toUpperCase()).concat(word.substring(1).toLowerCase());
-	    	}
-	    	return name;
-		}
+		// TODO: grab translations for various languages for various items
+		
+		return TradeCraft.currency.toPrettyString();
     }
 
 	private void displayCommandHelpText(Player player) {

@@ -4,6 +4,10 @@ import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
+//messing with internals
+//import org.bukkit.craftbukkit.entity.CraftPlayer;
+//import net.minecraft.server.EntityPlayer;
+
 public abstract class TradeCraftItemShop extends TradeCraftShop {
 
     public TradeCraftItemShop(TradeCraft plugin, Sign sign, Chest chest) {

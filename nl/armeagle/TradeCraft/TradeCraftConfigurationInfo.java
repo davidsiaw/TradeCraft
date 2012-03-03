@@ -25,6 +25,16 @@ class TradeCraftConfigurationInfo implements ConfigurationSerializable {
     	this.sellAmount = (Integer) map.get("sellAmount");
     	this.sellValue = (Integer) map.get("sellValue");
     }
+    
+    TradeCraftConfigurationInfo(String name, int id, int data) {
+    	this.name = name;
+    	this.type = new TradeCraftItem(id, data);
+    	this.buyAmount = 0;
+    	this.buyValue = 0;
+    	this.sellAmount = 0;
+    	this.sellValue = 0;
+    }
+    
     TradeCraftConfigurationInfo(Map<String, Object> map) {
     	this.name = (String) map.get("name");
     	this.type = new TradeCraftItem((Integer) map.get("itemTypeId"), (Integer) map.get("itemTypeData"));
@@ -33,6 +43,8 @@ class TradeCraftConfigurationInfo implements ConfigurationSerializable {
     	this.sellAmount = (Integer) map.get("sellAmount");
     	this.sellValue = (Integer) map.get("sellValue");
     }
+    
+    
 
     public Map<String, Object> toMap() {
     	LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();

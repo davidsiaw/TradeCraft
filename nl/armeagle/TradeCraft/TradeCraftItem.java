@@ -1,5 +1,7 @@
 package nl.armeagle.TradeCraft;
 
+import org.bukkit.inventory.ItemStack;
+
 /**
  * 
  * @author ArmEagle
@@ -53,6 +55,10 @@ public class TradeCraftItem implements Comparable<TradeCraftItem> {
 	@Override public String toString() {
 		return "TradeCraftItem("+ this.id +";"+ this.data +")";
 	}
+	
+	/** 
+	 * @return The ID and data value of the item as a string 
+	 */
 	public String toShortString() {
 		if ( this.data == 0 ) {
 			return String.valueOf(this.id);
@@ -60,4 +66,27 @@ public class TradeCraftItem implements Comparable<TradeCraftItem> {
 			return this.id +";"+ this.data;
 		}
 	}
+	
+	private String dress(String str) {
+		return str
+				.substring(0, 1).toUpperCase()
+				.concat(str.substring(1).toLowerCase());
+	}
+	
+	public String toPrettyString() {
+		ItemStack stack = new ItemStack(this.id, 1, this.data);
+		String str = stack.getType().toString();
+
+    	String[] words = str.split("\\(")[0].split("[ _]+");
+    	String name = dress(words[0]);
+    	for ( int word_ind = 1; word_ind < words.length; word_ind++ ) {
+    		String word = words[word_ind];
+    		name = name
+    				.concat(" ")
+    				.concat(dress(word));
+    	}
+    	
+    	return name;
+	}
+	
 }

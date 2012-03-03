@@ -7,7 +7,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.Listener;
 
-
 public class TradeCraftPlayerListener implements Listener{
 
 	private TradeCraft plugin;
